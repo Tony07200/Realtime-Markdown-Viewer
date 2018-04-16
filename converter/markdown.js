@@ -23,8 +23,9 @@ var parseBold = function(str) {
   while ((stra = boldRegExp.exec(str)) !== null) {
     str = str.replace(stra[0], '<b>' + stra[2] + '</b>')
   }
-  return str;
- }
+    return str;
+}
+
 
 var parseStrong = function(str) {
   var strongRegExp = /(~~)(.*?)\1/;
@@ -58,19 +59,19 @@ var parseNewLine = function(str) {
   var newLineRegExp = /(^|[^\n])\n{1}(?!\n)/;
   var stra = []; var tmp;
   while ((stra = newLineRegExp.exec(str)) !== null) {
-    tmp = stra[0].replace('\n', '<br/>')
+    tmp = stra[0].replace('\n', ' <br/>')
     str = str.replace(stra[0], tmp);
   }
   return str;
  }
 
- var parseCode = function(str) {
-  var codeRegExp = /`{1}(\w+)`{1}/;
-  var stra = [];
-  while ((stra = codeRegExp.exec(str)) !== null) {
-    str = str.replace(stra[0], '<pre>' + stra[1] + '</pre>');
-  }
-  return str;
+ var parseCode = function (str) {
+     var codeRegExp = /```(.*?)```/;
+     var stra = [];
+     while ((stra = codeRegExp.exec(str)) !== null) {
+         str = str.replace(stra[0], '<code>' + stra[1] + '</code>');
+     }
+     return str;
  }
 
  var parseBlockQuote = function(str) {
@@ -91,6 +92,7 @@ var parseNewLine = function(str) {
   return str;
  }
 
+
 var markdown = {
   parse: function (str, strict) {
     'use strict';
@@ -104,6 +106,7 @@ var markdown = {
     str = parseCode(str);
     str = parseBlockQuote(str);
     str = parseDel(str);
+
     return str;
   }
 };
